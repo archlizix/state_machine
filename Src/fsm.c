@@ -42,7 +42,8 @@ struct StateMachine *new_fsm(struct State *state_initial)
 int delete_fsm(struct StateMachine *fsm)
 {
 	free(fsm);
-	fsm = NULL;
+	//How can I kill it gracefully?
+	//fsm = NULL;
 	return 0;
 }
 
