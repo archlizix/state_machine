@@ -31,5 +31,6 @@ struct State *get_current_state(struct StateMachine *fsm);
 struct State *get_previous_state(struct StateMachine *fsm);
 struct State *get_next_state(struct StateMachine *fsm);
 
+//I feel helpless about this...
 #define delete_fsm(x) free_fsm(x);\
 	x = NULL;
