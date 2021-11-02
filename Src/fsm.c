@@ -18,10 +18,12 @@ int transfer(struct StateMachine *fsm, struct Event *event)
 	if (fsm->cur_state->exit_action != NULL) {
 		fsm->cur_state->exit_action(fsm, event);
 	}
+	fsm->cur_state->data = 0;
 
 	fsm->pre_state = fsm->cur_state;
 	fsm->cur_state = fsm->nxt_state;
 	fsm->nxt_state = NULL;
+	fsm->cur_state->data = 0;
 
 	if (fsm->cur_state->entry_action != NULL) {
 		fsm->cur_state->entry_action(fsm, event);
@@ -41,6 +43,7 @@ struct StateMachine *new_fsm(struct State *state_initial)
 	fsm->cur_state = state_initial;
 	fsm->nxt_state = NULL;
 	fsm->transfer = transfer;
+	fsm->cur_state->data = 0;
 	return fsm;
 }
 
