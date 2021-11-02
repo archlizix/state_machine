@@ -51,6 +51,9 @@ struct State state_end = {
 int main(void)
 {
 	struct StateMachine *foo = new_fsm(&state_0);
+	if (!foo) {
+		return -1;
+	}
 
 	while (foo->cur_state != &state_end) {
 		(foo->transfer)(foo, &event_0);
