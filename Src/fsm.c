@@ -15,12 +15,17 @@ int transfer(struct StateMachine *fsm, struct Event *event)
 		return 0;
 	}
 
-	fsm->cur_state->exit_action(fsm, event);
+	if (fsm->cur_state->exit_action != NULL) {
+		fsm->cur_state->exit_action(fsm, event);
+	}
+
 	fsm->pre_state = fsm->cur_state;
 	fsm->cur_state = fsm->nxt_state;
 	fsm->nxt_state = NULL;
 
-	fsm->cur_state->entry_action(fsm, event);
+	if (fsm->cur_state->entry_action != NULL) {
+		fsm->cur_state->entry_action(fsm, event);
+	}
 	return 0;
 }
 
