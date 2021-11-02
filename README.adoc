@@ -1,0 +1,16 @@
+= STATE_MACHINE
+
+量变产生质变。
+
+功能实现中。
+
+== 快速开始
+
+[source,bash]
+----
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+$ ./demo
+----
