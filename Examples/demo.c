@@ -4,8 +4,7 @@
 #include "fsm.h"
 
 static bool captured_10_event(struct StateMachine *fsm, struct Event *event);
-static void print_error_msg(struct StateMachine *fsm, struct Event *event);
-static void print_state_msg(struct StateMachine *fsm, struct Event *event);
+static void print_state_id(struct StateMachine *fsm, struct Event *event);
 
 struct Event event_0 = {
 	.id = 0,
@@ -21,7 +20,7 @@ struct State state_error = {
 	.id = -1,
 	.data = 0,
 	.updater = NULL,
-	.entry_action = print_error_msg,
+	.entry_action = print_state_id,
 	.exit_action = NULL,
 };
 
@@ -29,7 +28,7 @@ struct State state_0 = {
 	.id = 0,
 	.data = 0,
 	.updater = captured_10_event,
-	.entry_action = print_state_msg,
+	.entry_action = print_state_id,
 	.exit_action = NULL,
 };
 
@@ -37,7 +36,7 @@ struct State state_1 = {
 	.id = 1,
 	.data = 0,
 	.updater = NULL,
-	.entry_action = print_state_msg,
+	.entry_action = print_state_id,
 	.exit_action = NULL,
 };
 
@@ -45,7 +44,7 @@ struct State state_end = {
 	.id = 100,
 	.data = 0,
 	.updater = NULL,
-	.entry_action = print_state_msg,
+	.entry_action = print_state_id,
 	.exit_action = NULL,
 };
 
@@ -54,7 +53,6 @@ int main(void)
 	struct StateMachine *foo = new_fsm(&state_0);
 
 	while (foo->cur_state != &state_end) {
-		printf("haha\n");
 		(foo->transfer)(foo, &event_0);
 	}
 
@@ -64,23 +62,23 @@ int main(void)
 }
 
 /*!
-    \brief need to set state->data to zero in entry_action()
+    \brief need to set state->data to zero in entry_action() TODO: or in transfer
 */
 static bool captured_10_event(struct StateMachine *fsm, struct Event *event)
 {
-	if (++(fsm->cur_state->data) >= 10) {
+	if (event == &event_0) {
+		++(fsm->cur_state->data);
+		printf("Captured event_0 %d time(s).\n", fsm->cur_state->data);
+	}
+
+	if (fsm->cur_state->data >= 10) {
 		fsm->nxt_state = &state_end;
 		return true;
 	}
 	return false;
 }
 
-static void print_error_msg(struct StateMachine *fsm, struct Event *event)
+static void print_state_id(struct StateMachine *fsm, struct Event *event)
 {
-	printf("Error state.\n");
-}
-
-static void print_state_msg(struct StateMachine *fsm, struct Event *event)
-{
-	printf("state %d.\n", fsm->cur_state->id);
+	printf("Current state id is %d.\n", fsm->cur_state->id);
 }
