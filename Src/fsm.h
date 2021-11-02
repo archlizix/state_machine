@@ -26,7 +26,10 @@ struct StateMachine {
 };
 
 struct StateMachine *new_fsm(struct State *state_initial);
-int delete_fsm(struct StateMachine *fsm);
+int free_fsm(struct StateMachine *fsm);
 struct State *get_current_state(struct StateMachine *fsm);
 struct State *get_previous_state(struct StateMachine *fsm);
 struct State *get_next_state(struct StateMachine *fsm);
+
+#define delete_fsm(x) free_fsm(x);\
+	x = NULL;

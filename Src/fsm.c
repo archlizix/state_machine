@@ -39,7 +39,7 @@ struct StateMachine *new_fsm(struct State *state_initial)
 	return fsm;
 }
 
-int delete_fsm(struct StateMachine *fsm)
+int free_fsm(struct StateMachine *fsm)
 {
 	free(fsm);
 	//How can I kill it gracefully?
