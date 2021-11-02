@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "fsm.h"
 
-static bool captured_10_event(struct StateMachine *fsm, struct Event *event);
+static bool captured_10_event_0(struct StateMachine *fsm, struct Event *event);
 static void print_state_id(struct StateMachine *fsm, struct Event *event);
 
 struct Event event_0 = {
@@ -27,7 +27,7 @@ struct State state_error = {
 struct State state_0 = {
 	.id = 0,
 	.data = 0,
-	.updater = captured_10_event,
+	.updater = captured_10_event_0,
 	.entry_action = print_state_id,
 	.exit_action = NULL,
 };
@@ -64,10 +64,7 @@ int main(void)
 	return 0;
 }
 
-/*!
-    \brief need to set state->data to zero in entry_action() TODO: or in transfer
-*/
-static bool captured_10_event(struct StateMachine *fsm, struct Event *event)
+static bool captured_10_event_0(struct StateMachine *fsm, struct Event *event)
 {
 	if (event == &event_0) {
 		++(fsm->cur_state->data);
